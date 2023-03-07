@@ -2,8 +2,8 @@
 
 describe("login tests", () => {
 
-    it ("ligin with unregistred user", () => {
-        cy.visit ("https://gallery-app.vivifyideas.com/");
+    it ("login with unregistred user", () => {
+        cy.visit ("/");
         cy.get ("a[href='/login']").click();
         cy.get("#email").type("random@gmail.com");
         cy.get("#password").type("Test12345");
@@ -12,20 +12,32 @@ describe("login tests", () => {
     });
 
     it ("register without email addres provide", () => {
-        cy.visit ("https://gallery-app.vivifyideas.com/");
+        cy.visit ("/");
         cy.get ("a[href='/login']").click();
         cy.get("#password").type("Test12345");
         cy.get("button").click();
         cy.url().should("contain", "/login");
-    })
+    });
     
     it ("login with valide credentials", () => {
-        cy.visit ("https://gallery-app.vivifyideas.com/");
-        // cy.get ("a[href='/login']").click();
+        cy.visit ("/");
+        cy.get ("a[href='/login']").click();
         cy.get(".nav-link").eq(1).click();
         cy.get("#email").type("nedovic.filip@gmail.com");
         cy.get("#password").type("Test12345");
         cy.get("button").click();
     });
 });
+
+it ("logout", ()=>{
+    cy.visit ("/");
+    cy.get (" .nav-link").eq(1).click();
+    cy.get("#email").type("nedovic.filip@gmail.com");
+    cy.get("#password").type("Test12345");
+    cy.get("button").click();
+    cy.url().should("not.contain", "/login");
+    // cy.wait(1500);
+    cy.get(".nav-link").eq(3).click();
+})
+
 
